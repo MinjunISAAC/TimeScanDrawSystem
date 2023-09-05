@@ -23,7 +23,7 @@ public class SimpleStateMachine<TKey>
     {
         get
         {
-            return _currentState.State;
+            return _currentState.StateType;
         }
     }
 
@@ -114,7 +114,7 @@ public class SimpleStateMachine<TKey>
             _currentState.Finish(targetStateType);
 
             _currentState = state;
-            _currentState.Start(prevSimpleState.State, startParam);
+            _currentState.Start(prevSimpleState.StateType, startParam);
         }
         else
         {

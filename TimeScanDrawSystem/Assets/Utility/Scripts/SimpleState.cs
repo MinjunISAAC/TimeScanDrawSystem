@@ -17,7 +17,7 @@ namespace Utility.SimpleFSM
         // --------------------------------------------------
         // Properties
         // --------------------------------------------------
-        public abstract EStateType State { get; }
+        public abstract EStateType StateType { get; }
 
         // --------------------------------------------------
         // Functions - Public Using
