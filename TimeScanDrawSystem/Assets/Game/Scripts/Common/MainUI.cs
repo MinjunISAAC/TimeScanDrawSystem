@@ -23,16 +23,13 @@ namespace InGame.ForUI
         // --------------------------------------------------
         // Fucntions - Nomal
         // --------------------------------------------------
-        public void OnInit(Action readyBtnOnClick)
+        public StateView GetStateUI()
         {
-            _readyView.OnInit(readyBtnOnClick);
-        }
-
-        public void VisiablesToStateUI(EStateType stateType, bool isVisiable)
-        {
-            switch (stateType)
+            var currentState = StateMachine.Instance.CurrentState;
+            switch (currentState)
             {
-                case EStateType.Ready: _readyView.gameObject.SetActive(isVisiable); break;
+                case EStateType.Ready: return _readyView;
+                default:               return null;
             }
         }
     }

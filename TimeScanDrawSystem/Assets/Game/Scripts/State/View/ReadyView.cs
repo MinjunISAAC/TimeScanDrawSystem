@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace InGame.ForState.ForUI
 {
-    public class ReadyView : MonoBehaviour
+    public class ReadyView : StateView
     {
         // --------------------------------------------------
         // Components

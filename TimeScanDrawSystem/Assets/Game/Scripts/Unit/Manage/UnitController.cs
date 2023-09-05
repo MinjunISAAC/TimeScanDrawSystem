@@ -1,18 +1,34 @@
+// ----- C#
 using System.Collections;
 using System.Collections.Generic;
+
+// ----- Unity
 using UnityEngine;
 
-public class UnitController : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+// ----- User Defined
+using InGame.ForUnit;
 
-    // Update is called once per frame
-    void Update()
+namespace InGame.ForUnit
+{
+    public class UnitController : MonoBehaviour
     {
-        
+        // --------------------------------------------------
+        // Components
+        // --------------------------------------------------
+        [SerializeField] private Unit _targetUnit = null;
+
+        // --------------------------------------------------
+        // Functions - Nomal
+        // --------------------------------------------------
+        public void OnInit()
+        {
+            if (_targetUnit == null)
+            {
+                Debug.LogError($"<color=red>[UnitController.OnInit] Target Unit이 지정되지 않았습니다.</color>");
+                return;
+            }
+
+            _targetUnit.OnInit();
+        }
     }
 }

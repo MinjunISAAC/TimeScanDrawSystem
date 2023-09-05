@@ -8,6 +8,7 @@ using UnityEngine;
 // ----- User Defined
 using InGame.ForState;
 using InGame.ForUI;
+using InGame.ForUnit;
 
 namespace InGame
 {
@@ -16,8 +17,11 @@ namespace InGame
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
-        [Header("UI")]
-        [SerializeField] private MainUI _mainUI = null;
+        [Header("Manage Group")]
+        [SerializeField] private UnitController _unitController = null;
+
+        [Space] [Header("UI")]
+        [SerializeField] private MainUI         _mainUI         = null;
 
         // --------------------------------------------------
         // Variables
@@ -32,6 +36,9 @@ namespace InGame
             private set;
         } = null;
 
+        public UnitController UnitController => _unitController;
+        public MainUI         MainUI         => _mainUI;    
+
         // --------------------------------------------------
         // Functions - Event
         // --------------------------------------------------
@@ -42,22 +49,7 @@ namespace InGame
             // State 초기화
             StateMachine.Instance.ChangeState(EStateType.Ready, null);
 
-            // UI 초기화
-            _mainUI.OnInit( _SetReadyButton );
-
             yield return null;
-        }
-
-        // --------------------------------------------------
-        // Functions - Nomal
-        // --------------------------------------------------
-        private void _SetReadyButton()
-        {
-            // State 변경
-            StateMachine.Instance.ChangeState(EStateType.TimeScan, null);
-
-            // UI 설정
-            _mainUI.VisiablesToStateUI(EStateType.Ready, false);
         }
     }
 }

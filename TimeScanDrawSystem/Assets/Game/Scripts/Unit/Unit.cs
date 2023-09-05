@@ -27,10 +27,15 @@ namespace InGame.ForUnit
         [Header("Animate Group")]
         [SerializeField] private Animator   _animator  = null;
 
+        [Space] [Header("State - Ready")]
+        [SerializeField] private Transform _startTrans = null;
+        [SerializeField] private Transform _endTrans   = null;
+        [SerializeField] private float     _moveDuration    = 0.0f;
+
         // --------------------------------------------------
         // Variables
         // --------------------------------------------------
-        private EUnitState _unitState       = EUnitState.Unknown;
+        [SerializeField] private EUnitState _unitState       = EUnitState.Unknown;
         private Coroutine  _co_CurrentState = null;
 
         // --------------------------------------------------
@@ -39,16 +44,24 @@ namespace InGame.ForUnit
         // ----- Public
         public void OnInit()
         {
-
+            _ChangeToUnitState
+            (
+                EUnitState.Walk, 
+                () => 
+                {
+                    _ChangeToUnitState
+                    (
+                        EUnitState.TurnRight,
+                        null
+                    );
+                }
+            );
         }
 
-        public void ChangeToUnitState(EUnitState state)
-        {
-
-        }
+        public void ChangeToUnitState(EUnitState unitState, Action doneCallBack) => _ChangeToUnitState(unitState, doneCallBack);
 
         // ----- Private
-        private void _ChangeToUnitState(EUnitState unitState, float duration = 0.0f, Action doneCallBack = null)
+        private void _ChangeToUnitState(EUnitState unitState, Action doneCallBack = null)
         {
             if (!Enum.IsDefined(typeof(EUnitState), unitState))
             {
@@ -66,72 +79,90 @@ namespace InGame.ForUnit
 
             switch (_unitState)
             {
-                case EUnitState.Walk:      _State_Walk(); break;
-                case EUnitState.TurnRight: _State_TurnRight(); break;
-                case EUnitState.Pozing:    _State_Pozing(); break;
+                case EUnitState.Walk:      _State_Walk(doneCallBack);      break;
+                case EUnitState.TurnRight: _State_TurnRight(doneCallBack); break;
+                case EUnitState.Pozing:    _State_Pozing(doneCallBack);    break;
             }
         }
 
-        private void _State_Walk()
+        private void _State_Walk(Action doneCallBack)
         {
             if (_co_CurrentState == null)
             {
-                _co_CurrentState = StartCoroutine(_Co_Walk());
+                _co_CurrentState = StartCoroutine(_Co_Walk(doneCallBack));
                 return;
             }
 
             StopCoroutine(_co_CurrentState);
-            _co_CurrentState = StartCoroutine(_Co_Walk());
+            _co_CurrentState = StartCoroutine(_Co_Walk(doneCallBack));
         }
 
-        private void _State_TurnRight()
+        private void _State_TurnRight(Action doneCallBack)
         {
             if (_co_CurrentState == null)
             {
-                _co_CurrentState = StartCoroutine(_Co_TurnRight());
+                _co_CurrentState = StartCoroutine(_Co_TurnRight(doneCallBack));
                 return;
             }
 
             StopCoroutine(_co_CurrentState);
-            _co_CurrentState = StartCoroutine(_Co_Walk());
+            _co_CurrentState = StartCoroutine(_Co_TurnRight(doneCallBack));
         }
 
-        private void _State_Pozing()
+        private void _State_Pozing(Action doneCallBack)
         {
             if (_co_CurrentState == null)
             {
-                _co_CurrentState = StartCoroutine(_Co_Pozing());
+                _co_CurrentState = StartCoroutine(_Co_Pozing(doneCallBack));
                 return;
             }
 
             StopCoroutine(_co_CurrentState);
-            _co_CurrentState = StartCoroutine(_Co_Pozing());
+            _co_CurrentState = StartCoroutine(_Co_Pozing(doneCallBack));
         }
 
         // --------------------------------------------------
         // Functions - Coroutine
         // --------------------------------------------------
-        private IEnumerator _Co_Walk()
+        private IEnumerator _Co_Walk(Action doneCallBack)
         {
-            while (_unitState == EUnitState.Walk)
+            var sec      = 0.0f;
+            var startPos = _startTrans.position;
+            var endPos   = _endTrans.position;
+
+            _animator.SetTrigger("Walk");
+
+            while (sec < _moveDuration)
             {
+                sec += Time.deltaTime;
+                transform.position = Vector3.Lerp(startPos, endPos, sec / _moveDuration);
                 yield return null;
             }
+
+            transform.position = endPos;
+
+            doneCallBack?.Invoke();
         }
 
-        private IEnumerator _Co_TurnRight()
+        private IEnumerator _Co_TurnRight(Action doneCallBack)
         {
-            while (_unitState == EUnitState.TurnRight)
-            {
-                yield return null;
-            }
+            _animator.SetTrigger("TurnRight");
+
+            yield return new WaitForSeconds(1f);
+
+            _animator.SetTrigger("Idle");
+
+            doneCallBack?.Invoke();
         }
-        private IEnumerator _Co_Pozing()
+
+        private IEnumerator _Co_Pozing(Action doneCallBack)
         {
             while (_unitState == EUnitState.Pozing)
             {
                 yield return null;
             }
+
+            doneCallBack?.Invoke();
         }
     }
 }
