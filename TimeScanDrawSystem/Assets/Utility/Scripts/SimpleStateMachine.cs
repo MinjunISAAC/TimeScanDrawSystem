@@ -98,7 +98,7 @@ public class SimpleStateMachine<TKey>
 
         if (!_stateSet.TryGetValue(targetStateType, out var state))
         {
-            Debug.LogError($"[SimpleStateMachine.ChangeState] state Set에 {nameof(targetStateType)}가 존재하지 않습니다.");
+            Debug.LogError($"[SimpleStateMachine.ChangeState] State Set에 {targetStateType}가 존재하지 않습니다.");
             return;
         }
 

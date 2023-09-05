@@ -7,6 +7,7 @@ using UnityEngine;
 
 // ----- User Defined
 using InGame.ForState;
+using InGame.ForUI;
 
 namespace InGame
 {
@@ -15,6 +16,8 @@ namespace InGame
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
+        [Header("UI")]
+        [SerializeField] private MainUI _mainUI = null;
 
         // --------------------------------------------------
         // Variables
@@ -30,7 +33,7 @@ namespace InGame
         } = null;
 
         // --------------------------------------------------
-        // Functions - Coroutine
+        // Functions - Event
         // --------------------------------------------------
         private void Awake() { NullableInstance = this; }
 
@@ -38,9 +41,23 @@ namespace InGame
         {
             // State 초기화
             StateMachine.Instance.ChangeState(EStateType.Ready, null);
-            
-            
+
+            // UI 초기화
+            _mainUI.OnInit( _SetReadyButton );
+
             yield return null;
+        }
+
+        // --------------------------------------------------
+        // Functions - Nomal
+        // --------------------------------------------------
+        private void _SetReadyButton()
+        {
+            // State 변경
+            StateMachine.Instance.ChangeState(EStateType.TimeScan, null);
+
+            // UI 설정
+            _mainUI.VisiablesToStateUI(EStateType.Ready, false);
         }
     }
 }
