@@ -32,11 +32,6 @@ namespace InGame.ForState.ForUI
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
-        public void OnInit()
-        {
-
-        }
-
         public void TimeScan(Action doneCallBack)
         {
             if (_co_TimeScan == null)
@@ -45,24 +40,27 @@ namespace InGame.ForState.ForUI
                 return;
             }
         }
+
         // --------------------------------------------------
         // Functions - Coroutine
         // --------------------------------------------------
         private IEnumerator _Co_TimeScan(Action doneCallBack)
         {
-            var width         = _RECT_Canvas.rect.size.x;
-            var height        = _RECT_Canvas.rect.size.y;
-            var lazerPosition = _RECT_Lazer.anchoredPosition;
-
+            var width          = _RECT_Canvas.rect.size.x;
+            var height         = _RECT_Canvas.rect.size.y;
+            var visualLazerPos = _RECT_Lazer.anchoredPosition;
+            
             _RECT_Lazer.sizeDelta = new Vector2(width, _RECT_Lazer.sizeDelta.y);
 
             while (_RECT_Lazer.anchoredPosition.y > -1 * height / 2f )
             {
-                Debug.DrawRay(_RECT_Lazer.position, _RECT_Lazer.forward * 100f, Color.red);
+                var cameraPos = Camera.main.transform.position;
+                var lazerPos  = _RECT_Lazer.transform.position;
+                var dicVec    = (lazerPos - cameraPos).normalized;
+                
+                visualLazerPos.y -= _speedValue;
 
-                lazerPosition.y      -= _speedValue;
-
-                _RECT_Lazer.anchoredPosition = lazerPosition;
+                _RECT_Lazer.anchoredPosition = visualLazerPos;
                 yield return null;
             }
 
