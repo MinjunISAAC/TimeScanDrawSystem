@@ -60,6 +60,7 @@ namespace InGame.ForState
                 new Dictionary<EStateType, SimpleState<EStateType>>()
                 {
                     { EStateType.Ready,    new State_Ready()    },
+                    { EStateType.Select,   new State_Select()   },
                     { EStateType.TimeScan, new State_TimeScan() },
                 },
                 _coroutineExecutor,

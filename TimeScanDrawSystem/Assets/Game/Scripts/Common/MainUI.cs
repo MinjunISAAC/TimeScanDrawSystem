@@ -18,7 +18,8 @@ namespace InGame.ForUI
         // Components
         // --------------------------------------------------
         [Header("State UI")]
-        [SerializeField] private ReadyView _readyView = null;
+        [SerializeField] private ReadyView  _readyView  = null;
+        [SerializeField] private SelectView _selectView = null;
 
         // --------------------------------------------------
         // Fucntions - Nomal
@@ -28,8 +29,9 @@ namespace InGame.ForUI
             var currentState = StateMachine.Instance.CurrentState;
             switch (currentState)
             {
-                case EStateType.Ready: return _readyView;
-                default:               return null;
+                case EStateType.Ready:  return _readyView;
+                case EStateType.Select: return _selectView;
+                default:                return null;
             }
         }
     }

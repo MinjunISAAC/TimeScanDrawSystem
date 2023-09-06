@@ -4,6 +4,7 @@ namespace InGame.ForState
     {
         Unknown  = 0,
         Ready    = 1,
-        TimeScan = 2,
+        Select   = 2,
+        TimeScan = 3,
     }
 }

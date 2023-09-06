@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 6080699894523034019}
   - component: {fileID: 6080699894523034018}
   - component: {fileID: 6080699894523034029}
+  - component: {fileID: 4518040186875784448}
   m_Layer: 5
   m_Name: BTN_Start
   m_TagString: Untagged
@@ -163,7 +164,7 @@ RectTransform:
   m_GameObject: {fileID: 6080699894523034031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6080699894130680337}
@@ -257,6 +258,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!111 &4518040186875784448
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080699894523034031}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 0a079ca0f02bb9445a31a8dcde7ec522, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 0a079ca0f02bb9445a31a8dcde7ec522, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6080699894806319189
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,3 +325,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _BTN_Start: {fileID: 6080699894523034029}
+  _animation: {fileID: 4518040186875784448}
