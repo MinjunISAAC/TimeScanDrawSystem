@@ -81,7 +81,7 @@ namespace InGame.ForState
                 () => 
                 {
                     _selectItemType = _selectView.SelectItemType;
-                    _drawController.SetToSeleteItem(_selectItemType);
+                    _drawController.SeletedToDrawItem(_selectItemType);
                     StateMachine.Instance.ChangeState(EStateType.CountDown, null);
                 }
             );

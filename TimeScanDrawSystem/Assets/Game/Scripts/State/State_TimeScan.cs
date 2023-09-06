@@ -70,6 +70,8 @@ namespace InGame.ForState
             }
             #endregion
 
+            // Draw Controller 초기화
+            _drawController.ShowDrawItem();
 
             // UI 초기화
             _timeScanView.gameObject.SetActive(true);
