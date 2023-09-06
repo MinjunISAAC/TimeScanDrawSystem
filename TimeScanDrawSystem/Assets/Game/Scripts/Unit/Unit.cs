@@ -157,11 +157,9 @@ namespace InGame.ForUnit
 
         private IEnumerator _Co_Pozing(Action doneCallBack)
         {
-            while (_unitState == EUnitState.Pozing)
-            {
-                yield return null;
-            }
+            _animator.SetTrigger("Poze");
 
+            yield return null;
             doneCallBack?.Invoke();
         }
     }

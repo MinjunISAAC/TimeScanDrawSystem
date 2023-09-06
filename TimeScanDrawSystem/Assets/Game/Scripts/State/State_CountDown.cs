@@ -20,6 +20,9 @@ namespace InGame.ForState
         // ----- Owner
         private Main          _owner           = null;
 
+        // ----- Manage
+        private UnitController _unitController = null;
+
         // ----- UI
         private CountDownView _countDownView   = null;
 
@@ -46,6 +49,13 @@ namespace InGame.ForState
                 return;
             }
 
+            _unitController = _owner.UnitController;
+            if (_unitController == null)
+            {
+                Debug.LogError($"<color=red>[State_CountDown._Start] Unit Controller가 Null 상태입니다.</color>");
+                return;
+            }
+
             _countDownView = (CountDownView)_owner.MainUI.GetStateUI();
             if (_countDownView == null)
             {
@@ -54,9 +64,19 @@ namespace InGame.ForState
             }
             #endregion
 
+            // Unit 포즈
+            _unitController.ChangeToUnitState(Unit.EUnitState.Pozing);
+
             // UI 초기화
             _countDownView.gameObject.SetActive(true);
-            _countDownView.CountDown(COUNT_DOWN_VALUE, () => { });
+            _countDownView.CountDown
+            (
+                COUNT_DOWN_VALUE, 
+                () => 
+                {
+                    StateMachine.Instance.ChangeState(EStateType.TimeScan, null);
+                }
+            );
         }
 
         protected override void _Finish(EStateType nextStateKey)

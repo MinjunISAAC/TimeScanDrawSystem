@@ -41,8 +41,6 @@ public class CountDownView : StateView
 
         for (int i = 0; i < count; i++)
         {
-            Debug.Log($"왜 안되니? {count}");
-            
             _TMP_Count.text = $"{count - i}";
             _animation.Play();
 

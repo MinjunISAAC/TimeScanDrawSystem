@@ -1,6 +1,4 @@
 // ----- C#
-using InGame.ForState.ForUI;
-using InGame.ForUnit;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +7,8 @@ using UnityEngine;
 
 // ----- User Defined
 using Utility.SimpleFSM;
+using InGame.ForState.ForUI;
+using InGame.ForUnit;
 
 namespace InGame.ForState
 {

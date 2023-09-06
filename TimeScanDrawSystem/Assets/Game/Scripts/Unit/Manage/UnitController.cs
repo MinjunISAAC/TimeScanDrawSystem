@@ -1,4 +1,5 @@
 // ----- C#
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -30,5 +31,7 @@ namespace InGame.ForUnit
 
             _targetUnit.OnInit();
         }
+
+        public void ChangeToUnitState(Unit.EUnitState state, Action doneCallBack = null) => _targetUnit.ChangeToUnitState(state, doneCallBack);
     }
 }
