@@ -1,6 +1,4 @@
 // ----- C#
-using InGame.ForState.ForUI;
-using InGame.ForUnit;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +7,10 @@ using UnityEngine;
 
 // ----- User Defined
 using Utility.SimpleFSM;
+using InGame.ForDraw.Manage;
+using InGame.ForItem;
+using InGame.ForState.ForUI;
+using InGame.ForUnit;
 
 namespace InGame.ForState
 {
@@ -25,6 +27,10 @@ namespace InGame.ForState
 
         // ----- Manage
         private UnitController _unitController = null;
+        private DrawController _drawController = null;
+
+        // ----- Select Value
+        private EItemType      _selectItemType = EItemType.Unknown;
 
         // --------------------------------------------------
         // Properties
@@ -53,6 +59,13 @@ namespace InGame.ForState
                 return;
             }
 
+            _drawController = _owner.DrawController;
+            if (_drawController == null)
+            {
+                Debug.LogError($"<color=red>[State_Select._Start] Draw Controller가 Null 상태입니다.</color>");
+                return;
+            }
+
             _selectView = (SelectView)_owner.MainUI.GetStateUI();
             if (_selectView == null)
             {
@@ -63,8 +76,19 @@ namespace InGame.ForState
 
             // State UI 초기화
             _selectView.gameObject.SetActive(true);
-            _selectView.OnInit();
-            _selectView.VisiableToSelectItemButton(true, () => { });
+            _selectView.OnInit
+            (
+                () => 
+                {
+                    _selectItemType = _selectView.SelectItemType;
+                    _drawController.SetToSeleteItem(_selectItemType);
+                    StateMachine.Instance.ChangeState(EStateType.CountDown, null);
+                }
+            );
+            
+            _selectView.VisiableToSelectItemButton(true, null);
+
+
         }
 
         protected override void _Finish(EStateType nextStateKey)

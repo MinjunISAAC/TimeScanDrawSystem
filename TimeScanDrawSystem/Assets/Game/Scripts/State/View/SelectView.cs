@@ -30,19 +30,23 @@ namespace InGame.ForState.ForUI
         // --------------------------------------------------
         // Properties
         // --------------------------------------------------
-        public EItemType ItemType => _itemType;
+        public EItemType SelectItemType => _itemType;
 
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
-        public void OnInit()
+        public void OnInit(Action onClickSelectBtn)
         {
             for (int i = 0; i < _BTN_Items.Count; i++)
             {
                 var btn = _BTN_Items[i];
                 btn.OnInit
                 (
-                    () => { _itemType = btn.ItemType; }
+                    () => 
+                    { 
+                        _itemType = btn.ItemType;
+                        onClickSelectBtn?.Invoke();
+                    }
                 ); 
             }
         }

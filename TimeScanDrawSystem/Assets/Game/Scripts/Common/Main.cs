@@ -9,6 +9,7 @@ using UnityEngine;
 using InGame.ForState;
 using InGame.ForUI;
 using InGame.ForUnit;
+using InGame.ForDraw.Manage;
 
 namespace InGame
 {
@@ -19,6 +20,7 @@ namespace InGame
         // --------------------------------------------------
         [Header("Manage Group")]
         [SerializeField] private UnitController _unitController = null;
+        [SerializeField] private DrawController _drawController = null;
 
         [Space] [Header("UI")]
         [SerializeField] private MainUI         _mainUI         = null;
@@ -37,6 +39,7 @@ namespace InGame
         } = null;
 
         public UnitController UnitController => _unitController;
+        public DrawController DrawController => _drawController;
         public MainUI         MainUI         => _mainUI;    
 
         // --------------------------------------------------
